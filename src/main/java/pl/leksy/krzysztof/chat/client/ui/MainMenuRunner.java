@@ -86,13 +86,10 @@ public class MainMenuRunner implements Runnable {
             case "T":
             case "t":
             case "true":
-            case "tak":
             case "True":
                 return true;
-            case "N":
-            case "n":
-            case "no":
-            case "nie":
+            case "F":
+            case "f":
             case "false":
             case "False":
                 return false;
