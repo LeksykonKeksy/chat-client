@@ -1,0 +1,2 @@
+# /usr/lib/jvm/java-11.0.2-openjdk-amd64/bin/java -cp "~/.gradle/caches/modules-2/files-2.1/info.picocli/picocli/4.5.1/ff913b736b6ffc7cdf8144401b02a501554ba0c5/picocli-4.5.1.jar;build/libs/chat-client-0.0.1-SNAPSHOT.jar" pl.leksy.krzysztof.chat.client.ChatClientApplication
+/etc/jdk-11.0.2/bin/java -javaagent:/usr/share/intellij-idea-community/lib/idea_rt.jar=34577:/usr/share/intellij-idea-community/bin -Dfile.encoding=UTF-8 -classpath /tmp/classpath2100302816.jar pl.leksy.krzysztof.chat.client.ChatClientApplication
