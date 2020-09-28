@@ -20,8 +20,8 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class WebSocketClient {
 
-    @Value("${chat.server.join.url}")
-    private String joinUrl;
+    @Value("${chat.server.url}")
+    private String serverUrl;
 
     @Value("${chat.server.topic.name}")
     private String chatTopicName;
@@ -29,7 +29,7 @@ public class WebSocketClient {
     @Value("${chat.server.msg.destination}")
     private String chatMessageDestination;
 
-    private final String EXIT_STRING = "/exit";
+    private final static String EXIT_STRING = "/exit";
     private final Scanner scanner = new Scanner(System.in);
 
     public void joinChatRoom(JoinRoomRequestDto dto) {
@@ -44,7 +44,7 @@ public class WebSocketClient {
 
         LOGGER.info("Connected to chat {}. Type '/exit' to leave.", roomName);
 
-        String inputMessage = scanner.nextLine();
+        var inputMessage = scanner.nextLine();
         while (!EXIT_STRING.equalsIgnoreCase(inputMessage)) {
             session.send(createChatDestination(roomName), new ChatMessage()
                     .setFrom(dto.getNickname())
@@ -63,7 +63,7 @@ public class WebSocketClient {
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
         final var sessionHandler = new ChatStompSessionHandler(createChatTopicName(roomName));
-        return stompClient.connect(joinUrl, sessionHandler);
+        return stompClient.connect(serverUrl, sessionHandler);
     }
 
     private String createChatTopicName(String roomName) {

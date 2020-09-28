@@ -5,7 +5,7 @@ import pl.leksy.krzysztof.chat.client.room.model.Room;
 import java.util.List;
 
 public interface RoomFacade {
-    void createChatRoom(Room room, String nickname);
+    String createChatRoom(Room room, String nickname);
 
     void joinChatRoom(Room room, String nickname);
 

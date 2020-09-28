@@ -9,6 +9,7 @@ import pl.leksy.krzysztof.chat.client.room.service.RoomFacade;
 import java.util.Scanner;
 
 import static picocli.CommandLine.Command;
+import static pl.leksy.krzysztof.chat.client.utils.PasswordHasher.hashPassword;
 
 @Slf4j
 @Service
@@ -46,7 +47,7 @@ public class MainMenuRunner implements Runnable {
         printLine("Enter room name/id: ");
         final var roomName = readLine();
         printLine("Enter room password (you can skip this field): ");
-        final var password = readLine();
+        final var password = hashPassword(readLine());
         // TODO: obsługa różnych haseł (enter, spacja, bazgroły itp)
 
         final var room = new Room()
@@ -66,7 +67,7 @@ public class MainMenuRunner implements Runnable {
         String password = null;
         if (roomPrivate) {
             printLine("Enter room password (you can skip this field): ");
-            password = readLine();
+            password = hashPassword(readLine());
         }
         printLine("How many slots should there be: ");
         final var slots = Integer.parseInt(readLine());
@@ -77,7 +78,14 @@ public class MainMenuRunner implements Runnable {
                 .setPassword(password)
                 .setSlots(slots);
 
-        roomFacade.createChatRoom(room, nickname);
+        final var finalRoomName = roomFacade.createChatRoom(room, nickname);
+        room.setName(finalRoomName);
+
+        printLine("Proceed to join to created room? (T/F): ");
+        final var joinNewRoom = readBooleanFromString(readLine());
+        if (joinNewRoom) {
+            roomFacade.joinChatRoom(room, nickname);
+        }
 
     }
 

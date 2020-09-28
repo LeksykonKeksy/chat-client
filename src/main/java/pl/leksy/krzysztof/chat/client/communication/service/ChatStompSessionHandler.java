@@ -22,17 +22,17 @@ public class ChatStompSessionHandler implements StompSessionHandler {
 
     @Override
     public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-
+        LOGGER.error("Exception during chatting: ", exception);
     }
 
     @Override
     public void handleTransportError(StompSession session, Throwable exception) {
-
+        LOGGER.error("Exception during chatting: ", exception);
     }
 
     @Override
     public Type getPayloadType(StompHeaders headers) {
-        return null;
+        return ChatMessage.class;
     }
 
     @Override
