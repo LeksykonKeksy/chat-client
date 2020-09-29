@@ -2,27 +2,26 @@ package pl.leksy.krzysztof.chat.client.ui;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import pl.leksy.krzysztof.chat.client.room.model.Room;
 import pl.leksy.krzysztof.chat.client.room.service.RoomFacade;
 
 import java.util.Scanner;
 
-import static picocli.CommandLine.Command;
 import static pl.leksy.krzysztof.chat.client.utils.PasswordHasher.hashPassword;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Command(name = "chat") // TODO
-public class MainMenuRunner implements Runnable {
+public class MainMenuRunner implements CommandLineRunner {
     private final RoomFacade roomFacade;
     private final Scanner scanner = new Scanner(System.in);
 
     private final static String exitString = "exit";
 
     @Override
-    public void run() {
+    public void run(String... args) {
         printLine("Welcome to chat app");
 
         String command;
