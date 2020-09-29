@@ -68,7 +68,7 @@ public class HttpClient {
     }
 
     public void disconnectFromRoom(DisconnectFromRoomRequestDto dto) {
-        final var response = restTemplate.postForEntity(listUrl, dto, RoomListDto.class);
+        final var response = restTemplate.postForEntity(disconnectUrl, dto, String.class);
         final var responseStatus = response.getStatusCode();
         if (responseStatus != HttpStatus.OK) {
             LOGGER.error("Exception during networking, status code: {}", responseStatus);

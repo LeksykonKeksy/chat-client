@@ -39,7 +39,11 @@ public class ChatStompSessionHandler implements StompSessionHandler {
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         final var msg = (ChatMessage) payload;
-        final var receivedDate = LocalDateTime.now();
-        LOGGER.info("[{}] ({}): {}", msg.getFrom(), receivedDate, msg.getText()); // TODO: kolorki?
+
+        if (msg != null) {
+            final var receivedDate = LocalDateTime.now();
+            LOGGER.info("[{}] ({}): {}", msg.getFrom(), receivedDate, msg.getText()); // TODO: kolorki?
+            System.out.println(String.format("[%s] (%s): %s", msg.getFrom(), receivedDate, msg.getText())); // TODO: kolorki?
+        }
     }
 }
