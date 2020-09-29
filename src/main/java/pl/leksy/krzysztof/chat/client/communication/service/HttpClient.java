@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.leksy.krzysztof.chat.client.communication.model.http.CreateRoomRequestDto;
-import pl.leksy.krzysztof.chat.client.communication.model.http.CreateRoomResponseDto;
-import pl.leksy.krzysztof.chat.client.communication.model.http.JoinRoomRequestDto;
-import pl.leksy.krzysztof.chat.client.communication.model.http.RoomListDto;
+import pl.leksy.krzysztof.chat.client.communication.model.http.*;
 
 @Slf4j
 @Service
@@ -25,6 +22,9 @@ public class HttpClient {
 
     @Value("${chat.server.list.url}")
     private String listUrl;
+
+    @Value("${chat.server.disconnect.url}")
+    private String disconnectUrl;
 
     public CreateRoomResponseDto createChatRoomOnServer(CreateRoomRequestDto dto) {
         final var response = restTemplate.postForEntity(createUrl, dto, CreateRoomResponseDto.class);
@@ -65,5 +65,14 @@ public class HttpClient {
             throw new RuntimeException(); // TODO: exception
         }
 
+    }
+
+    public void disconnectFromRoom(DisconnectFromRoomRequestDto dto) {
+        final var response = restTemplate.postForEntity(listUrl, dto, RoomListDto.class);
+        final var responseStatus = response.getStatusCode();
+        if (responseStatus != HttpStatus.OK) {
+            LOGGER.error("Exception during networking, status code: {}", responseStatus);
+            throw new RuntimeException(); // TODO: exception
+        }
     }
 }

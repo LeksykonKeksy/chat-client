@@ -63,6 +63,7 @@ public class WebSocketClient {
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
         final var sessionHandler = new ChatStompSessionHandler(createChatTopicName(roomName));
+        LOGGER.info("Trying to connect to WS url {}", serverUrl);
         return stompClient.connect(serverUrl, sessionHandler);
     }
 
