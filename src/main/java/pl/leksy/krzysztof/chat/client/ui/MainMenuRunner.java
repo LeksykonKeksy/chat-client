@@ -23,14 +23,16 @@ public class MainMenuRunner implements Runnable {
 
     @Override
     public void run() {
-        String command = "";
+        printLine("Welcome to chat app");
+
+        String command;
         do {
-            printLine("Welcome to chat app");
+            printLine("Type 'exit' to exit app");
             printLine("Would you 'join', 'create' or 'list' chat room(s)?");
             command = readLine();
 
             proceed(command);
-        } while (exitString.equalsIgnoreCase(command));
+        } while (!exitString.equalsIgnoreCase(command));
         printLine("Exiting chat client...");
     }
 

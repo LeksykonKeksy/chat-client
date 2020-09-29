@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class WebSocketClient {
 
-    @Value("${chat.server.url}")
+    @Value("${chat.server.ws.url}")
     private String serverUrl;
 
     @Value("${chat.server.topic.name}")
