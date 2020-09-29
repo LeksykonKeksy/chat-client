@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import pl.leksy.krzysztof.chat.client.communication.model.ws.ChatMessage;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +39,7 @@ public class ChatStompSessionHandler implements StompSessionHandler {
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         final var msg = (ChatMessage) payload;
-        LOGGER.info("[{}]: {}", msg.getFrom(), msg.getText()); // TODO: kolorki?
+        final var receivedDate = LocalDateTime.now();
+        LOGGER.info("[{}] ({}): {}", msg.getFrom(), receivedDate, msg.getText()); // TODO: kolorki?
     }
 }
