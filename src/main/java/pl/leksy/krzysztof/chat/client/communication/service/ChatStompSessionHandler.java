@@ -42,7 +42,6 @@ public class ChatStompSessionHandler implements StompSessionHandler {
 
         if (msg != null) {
             final var receivedDate = LocalDateTime.now();
-            LOGGER.info("[{}] ({}): {}", msg.getFrom(), receivedDate, msg.getText()); // TODO: kolorki?
             System.out.println(String.format("[%s] (%s): %s", msg.getFrom(), receivedDate, msg.getText())); // TODO: kolorki?
         }
     }
