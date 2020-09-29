@@ -31,6 +31,7 @@ public class ChatClientApplication implements CommandLineRunner, ExitCodeGenerat
         commandLine.addSubcommand("join", joinRoomRunner);
 
         exitCode = commandLine.execute(args);
+        System.exit(exitCode);
     }
 
     @Override

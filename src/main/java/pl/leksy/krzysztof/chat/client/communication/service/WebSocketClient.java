@@ -38,8 +38,8 @@ public class WebSocketClient {
         try {
             session = createStompSession(roomName).get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); // TODO
-            throw new RuntimeException(); // TODO
+            LOGGER.error("Cannot connect to chat {}. Leaving...", roomName);
+            return;
         }
 
         LOGGER.info("Connected to chat {}. Type '/exit' to leave.", roomName);
@@ -67,10 +67,12 @@ public class WebSocketClient {
     }
 
     private String createChatTopicName(String roomName) {
-        return chatTopicName + "/" + roomName;
+//        return chatTopicName + "/" + roomName;
+        return chatTopicName;
     }
 
     private String createChatDestination(String roomName) {
-        return chatMessageDestination + "/" + roomName;
+//        return chatMessageDestination + "/" + roomName;
+        return chatMessageDestination;
     }
 }
