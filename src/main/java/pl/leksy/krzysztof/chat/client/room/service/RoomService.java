@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.leksy.krzysztof.chat.client.communication.model.http.CreateRoomRequestDto;
 import pl.leksy.krzysztof.chat.client.communication.model.http.JoinRoomRequestDto;
+import pl.leksy.krzysztof.chat.client.communication.model.http.RoomDto;
 import pl.leksy.krzysztof.chat.client.communication.service.HttpClient;
 import pl.leksy.krzysztof.chat.client.communication.service.WebSocketClient;
 import pl.leksy.krzysztof.chat.client.room.model.Room;
@@ -42,12 +43,16 @@ public class RoomService implements RoomFacade {
         final var canJoin = httpClient.joinChatRoomOnServer(request);
 
         if (canJoin) {
+            LOGGER.info("User {} can join room {} - proceeding further.", nickname, room.getName());
             webSocketClient.joinChatRoom(request);
+        } else {
+            LOGGER.warn("User {} cannot join room {} - leaving.", nickname, room.getName());
         }
     }
 
     @Override
-    public List<Room> listPublicRooms() {
-        return null;
+    public List<RoomDto> listPublicRooms() {
+        return httpClient.listPublicRooms()
+                .getRooms();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import pl.leksy.krzysztof.chat.client.communication.model.http.CreateRoomRequestDto;
 import pl.leksy.krzysztof.chat.client.communication.model.http.CreateRoomResponseDto;
 import pl.leksy.krzysztof.chat.client.communication.model.http.JoinRoomRequestDto;
+import pl.leksy.krzysztof.chat.client.communication.model.http.RoomListDto;
 
 @Slf4j
 @Service
@@ -21,6 +22,9 @@ public class HttpClient {
 
     @Value("${chat.server.join.url}")
     private String joinUrl;
+
+    @Value("${chat.server.list.url}")
+    private String listUrl;
 
     public CreateRoomResponseDto createChatRoomOnServer(CreateRoomRequestDto dto) {
         final var response = restTemplate.postForEntity(createUrl, dto, CreateRoomResponseDto.class);
@@ -49,5 +53,17 @@ public class HttpClient {
                 LOGGER.error("Unknown error. Status code: {}", responseStatus);
                 return false;
         }
+    }
+
+    public RoomListDto listPublicRooms() {
+        final var response = restTemplate.getForEntity(listUrl, RoomListDto.class);
+        final var responseStatus = response.getStatusCode();
+        if (responseStatus == HttpStatus.OK) {
+            return response.getBody();
+        } else {
+            LOGGER.error("Exception during networking, status code: {}", responseStatus);
+            throw new RuntimeException(); // TODO: exception
+        }
+
     }
 }

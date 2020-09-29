@@ -19,13 +19,19 @@ public class MainMenuRunner implements Runnable {
     private final RoomFacade roomFacade;
     private final Scanner scanner = new Scanner(System.in);
 
+    private final static String exitString = "exit";
+
     @Override
     public void run() {
-        printLine("Welcome to chat app");
-        printLine("Would you 'join' or 'create' chat room?");
-        final var command = readLine();
+        String command = "";
+        do {
+            printLine("Welcome to chat app");
+            printLine("Would you 'join', 'create' or 'list' chat room(s)?");
+            command = readLine();
 
-        proceed(command);
+            proceed(command);
+        } while (exitString.equalsIgnoreCase(command));
+        printLine("Exiting chat client...");
     }
 
     private void proceed(String command) {
@@ -36,8 +42,22 @@ public class MainMenuRunner implements Runnable {
             case "create":
                 create();
                 break;
+            case "list":
+                list();
+                break;
+            case exitString:
+                break;
             default:
-                printLine("Unknown command - should be 'join' or 'create'");
+                printLine("Unknown command - should be 'join', 'create' or 'list'");
+        }
+    }
+
+    private void list() {
+        final var rooms = roomFacade.listPublicRooms();
+        for (int i = 1; i <= rooms.size(); ++i) {
+            final var currRoom = rooms.get(i - 1);
+            printLine("%d. \t%s\t%d/%d\t%s", i, currRoom.getName(),
+                    currRoom.getCurrentUsers(), currRoom.getSlots(), currRoom.getCreatedBy());
         }
     }
 
